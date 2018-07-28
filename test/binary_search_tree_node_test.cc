@@ -265,5 +265,5 @@ TEST(BinarySearchTreeNodeTest, abandon_removed_node) {
   auto childNode = rootNode->find("bar");
   rootNode->remove("bar");
 
-  // EXPECT_EQ(childNode->parent_.lock(), nullptr);
+  EXPECT_TRUE(childNode->parent_.expired());
 }
