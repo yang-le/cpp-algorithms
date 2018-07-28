@@ -1,5 +1,6 @@
 language: cpp
+env:
+    - JOB=lint
+    - JOB=test
 script:
-    - make
-    - make test
-    - make lint
+    - make ${JOB}
