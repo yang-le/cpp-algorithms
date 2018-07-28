@@ -12,6 +12,7 @@ matrix:
             - clang-3.6
       env:
         - MATRIX_EVAL="CC=clang-3.6 && CXX=clang++-3.6"
+        - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -24,6 +25,7 @@ matrix:
             - clang-3.7
       env:
         - MATRIX_EVAL="CC=clang-3.7 && CXX=clang++-3.7"
+        - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -36,6 +38,7 @@ matrix:
             - clang-3.8
       env:
         - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
+        - JOB=test
 
     # works on Trusty
     - os: linux
@@ -47,6 +50,7 @@ matrix:
             - clang-3.9
       env:
         - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
+        - JOB=test
 
     # works on Trusty
     - os: linux
@@ -58,6 +62,7 @@ matrix:
             - clang-4.0
       env:
         - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - JOB=test
 
     # works on Trusty
     - os: linux
@@ -69,6 +74,7 @@ matrix:
             - clang-5.0
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -80,6 +86,7 @@ matrix:
             - g++-4.9
       env:
          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+         - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -91,6 +98,7 @@ matrix:
             - g++-5
       env:
          - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -102,6 +110,7 @@ matrix:
             - g++-6
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - JOB=test
 
     # works on Precise and Trusty
     - os: linux
@@ -113,11 +122,19 @@ matrix:
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - JOB=test
+
+    # default
+    - os: linux
+      env:
+        - JOB=test
+
+    - os: linux
+      env:
+        - JOB=lint
 
 before_install:
     - eval "${MATRIX_EVAL}"
-env:
-    - JOB=lint
-    - JOB=test
+
 script:
     - make ${JOB}
