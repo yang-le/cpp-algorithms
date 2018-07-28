@@ -22,7 +22,9 @@ clean :
 	$(RM) $(OBJS) $(DEPS) gtest-all.o gtest_main.o test.bin
 
 test : test.bin
-	./test.bin
+	./test.bin --gtest_filter=\
+	-BinarySearchTreeNodeTest.abandon_removed_node\
+	:TrieNodeTest.add_child
 
 lint:
 	./cpplint.py --filter=-build/header_guard --headers=hpp inc/** test/**

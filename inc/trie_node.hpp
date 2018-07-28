@@ -26,8 +26,6 @@
 #include <unordered_set>
 #include "hash_table.hpp"
 
-class TrieNode;
-
 class TrieNode {
  public:
   explicit TrieNode(char character, bool is_complete_word = false)
