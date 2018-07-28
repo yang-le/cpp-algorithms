@@ -1,5 +1,5 @@
 OBJS = $(patsubst %.cc, %.o,$(wildcard test/*.cc))
-CXXFLAGS = -Wall -Wno-sign-compare -Os
+CXXFLAGS = -Wall -Wno-sign-compare -Os -std=c++11
 
 .cc.o:
 	$(CXX) $(CXXFLAGS) -Iinc -I. -c $< -o $@
