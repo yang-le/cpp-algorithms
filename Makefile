@@ -20,4 +20,4 @@ test : test.bin
 	./test.bin
 
 lint:
-	./cpplint.py --filter=-build/header_guard,-legal/copyright --headers=hpp inc/** test/**
+	./cpplint.py --filter=-build/header_guard --headers=hpp inc/** test/**
