@@ -1,10 +1,12 @@
 #pragma once
 
+#include <string>
+#include <unordered_set>
 #include "hash_table.hpp"
 
 class TrieNode {
  public:
-  TrieNode(char character, bool is_complete_word = false)
+  explicit TrieNode(char character, bool is_complete_word = false)
       : character_(character), is_complete_word_(is_complete_word) {}
 
   TrieNode* getChild(char character) { return children_.get({character}); }

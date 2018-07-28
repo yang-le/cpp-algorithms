@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include "min_heap.hpp"
 
 template <typename T>

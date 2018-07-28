@@ -7,9 +7,10 @@ class Comparator {
   using compare_func_t = std::function<int(const T& a, const T& b)>;
 
  public:
-  Comparator(std::nullptr_t) : is_default_(true), comparator_(defaultCompare) {}
+  explicit Comparator(std::nullptr_t)
+      : is_default_(true), comparator_(defaultCompare) {}
 
-  Comparator(compare_func_t compare = nullptr)
+  explicit Comparator(compare_func_t compare = nullptr)
       : is_default_(!compare),
         comparator_(is_default_ ? defaultCompare : compare) {}
 

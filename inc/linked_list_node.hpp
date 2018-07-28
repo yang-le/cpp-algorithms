@@ -8,7 +8,8 @@
 template <typename T>
 class LinkedListNode {
  public:
-  LinkedListNode(const T& value, std::shared_ptr<LinkedListNode> next = nullptr)
+  explicit LinkedListNode(const T& value,
+                          std::shared_ptr<LinkedListNode> next = nullptr)
       : value_(value), next_(next) {}
 
   std::string toString(std::function<std::string(const T&)> callback) const {

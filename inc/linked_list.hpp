@@ -1,7 +1,9 @@
 #pragma once
 
 #include <array>
+#include <memory>
 #include <numeric>
+#include <string>
 #include <vector>
 #include "comparator.hpp"
 #include "linked_list_node.hpp"
@@ -9,7 +11,7 @@
 template <typename T>
 class LinkedList {
  public:
-  LinkedList(typename Comparator<T>::compare_func_t compare = nullptr)
+  explicit LinkedList(typename Comparator<T>::compare_func_t compare = nullptr)
       : head_(nullptr), tail_(nullptr), comparator_(compare) {}
 
   LinkedList* prepend(const T& value) {

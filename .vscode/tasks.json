@@ -19,6 +19,12 @@
             "group": "test"
         },
         {
+            "label": "lint",
+            "type": "shell",
+            "command": "make lint",
+            "group": "test",
+        },
+        {
             "label": "clean",
             "type": "shell",
             "command": "make clean",

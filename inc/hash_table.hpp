@@ -1,7 +1,10 @@
 #pragma once
 
 #include <array>
+#include <memory>
+#include <string>
 #include <unordered_set>
+#include <utility>
 #include "linked_list.hpp"
 
 template <typename T, std::size_t N = 32>

@@ -1,12 +1,14 @@
 #pragma once
 
+#include <memory>
 #include "binary_tree_node.hpp"
 #include "comparator.hpp"
 
 template <typename T>
 class BinarySearchTreeNode : public BinaryTreeNode<T> {
  public:
-  BinarySearchTreeNode(typename Comparator<T>::compare_func_t compare = nullptr)
+  explicit BinarySearchTreeNode(
+      typename Comparator<T>::compare_func_t compare = nullptr)
       : BinaryTreeNode<T>(),
         compare_(compare),
         value_comparator_(Comparator<T>(compare)) {}
@@ -126,7 +128,7 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
       if (parent) {
         parent->replaceChild(nodeToRemove, childNode);
       } else {
-        BinaryTreeNode<T>::copyNode(*childNode, *nodeToRemove);
+        BinaryTreeNode<T>::copyNode(*childNode, nodeToRemove);
       }
     }
 

@@ -290,7 +290,7 @@ TEST(BinaryTreeNodeTest, copy_node) {
 
   EXPECT_EQ(newRoot->toString(), "new_left,new_root,new_right");
 
-  BinaryTreeNode<std::string>::copyNode(*root, *newRoot);
+  BinaryTreeNode<std::string>::copyNode(*root, newRoot.get());
 
   EXPECT_EQ(root->toString(), "left,root,right");
   EXPECT_EQ(newRoot->toString(), "left,root,right");

@@ -1,10 +1,12 @@
 #pragma once
 
+#include <string>
+#include <unordered_set>
 #include "trie_node.hpp"
 
 class Trie {
  public:
-  const static char HEAD_CHARACTER = '*';
+  static const char HEAD_CHARACTER = '*';
 
   Trie() : head_(HEAD_CHARACTER) {}
 

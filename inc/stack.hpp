@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <string>
+#include <vector>
 #include "linked_list.hpp"
 
 template <typename T>

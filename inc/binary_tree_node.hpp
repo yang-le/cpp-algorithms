@@ -1,5 +1,8 @@
 #pragma once
 
+#include <algorithm>
+#include <memory>
+#include <string>
 #include <vector>
 #include "hash_table.hpp"
 
@@ -13,7 +16,7 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
         valid_(false),
         node_comparator_(Comparator<const BinaryTreeNode *>()) {}
 
-  BinaryTreeNode(const T &value)
+  explicit BinaryTreeNode(const T &value)
       : left_(nullptr),
         right_(nullptr),
         parent_(),
@@ -138,10 +141,11 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
     return false;
   }
 
-  static void copyNode(BinaryTreeNode &sourceNode, BinaryTreeNode &targetNode) {
-    targetNode.setValue(sourceNode.value_);
-    targetNode.setLeft(sourceNode.left_);
-    targetNode.setRight(sourceNode.right_);
+  static void copyNode(const BinaryTreeNode &sourceNode,
+                       BinaryTreeNode *targetNode) {
+    targetNode->setValue(sourceNode.value_);
+    targetNode->setLeft(sourceNode.left_);
+    targetNode->setRight(sourceNode.right_);
   }
 
   std::vector<T> traverseInOrder() {

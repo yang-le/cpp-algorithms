@@ -4,13 +4,15 @@
 #include <functional>
 #include <numeric>
 #include <sstream>
+#include <string>
+#include <utility>
 #include <vector>
 #include "comparator.hpp"
 
 template <typename T>
 class MinHeap {
  public:
-  MinHeap(typename Comparator<T>::compare_func_t compare = nullptr)
+  explicit MinHeap(typename Comparator<T>::compare_func_t compare = nullptr)
       : comparator_(compare) {}
 
   const T *peek() {
@@ -48,7 +50,7 @@ class MinHeap {
     return this;
   }
 
-  MinHeap *remove(const T &item, Comparator<T> comparator = nullptr) {
+  MinHeap *remove(const T &item, Comparator<T> comparator = Comparator<T>()) {
     // Find number of items to remove.
     auto customComparator = comparator ? comparator : comparator_;
     auto numberOfItemsToRemove = find(item, customComparator).size();
@@ -84,7 +86,7 @@ class MinHeap {
   }
 
   std::vector<int> find(const T &item,
-                        Comparator<T> custom_comparator = nullptr) {
+                        Comparator<T> custom_comparator = Comparator<T>()) {
     std::vector<int> foundItemIndices;
     auto comparator = custom_comparator ? custom_comparator : comparator_;
 
@@ -117,7 +119,7 @@ class MinHeap {
   int getRightChildIndex(int parentIndex) { return (2 * parentIndex) + 2; }
 
   int getParentIndex(int childIndex) {
-    return (int)std::floor((childIndex - 1) / 2.0);
+    return static_cast<int>(std::floor((childIndex - 1) / 2.0));
   }
 
   bool hasParent(int childIndex) { return getParentIndex(childIndex) >= 0; }
