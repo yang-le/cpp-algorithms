@@ -35,7 +35,7 @@ clean :
 
 test : test.bin
 	@./$< --gtest_filter=\
-	BinarySearchTreeNodeTest.abandon_removed_node\
+	-BinarySearchTreeNodeTest.abandon_removed_node\
 	:TrieNodeTest.add_child
 
 coverage : test.bin
