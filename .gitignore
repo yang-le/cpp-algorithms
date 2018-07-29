@@ -34,3 +34,6 @@
 
 # Coverage files
 *.prof*
+
+# Docs
+docs

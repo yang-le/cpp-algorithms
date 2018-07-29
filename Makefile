@@ -19,26 +19,29 @@ endif
 	$(CXX) $(CXXFLAGS) -Iinc -I. -MM -MT"$*.d" -MT"$(<:.cc=.o)" $< > $*.d
 	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) $(SANITIZER_FLAGS) -Iinc -I. -c $< -o $@
 
-test.bin : $(OBJS) gtest-all.o gtest_main.o
+all: test.bin
+
+test.bin: $(OBJS) gtest-all.o gtest_main.o
 	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) $(SANITIZER_FLAGS) $^ -pthread -o $@
 
-gtest-all.o : gtest/gtest-all.cpp
+gtest-all.o: gtest/gtest-all.cpp
 	$(CXX) $(CXXFLAGS) -I. -c $< -o $@
 
-gtest_main.o : gtest/gtest_main.cc
+gtest_main.o: gtest/gtest_main.cc
 	$(CXX) $(CXXFLAGS) -I. -c $< -o $@
 
 sinclude $(DEPS)
 
-clean :
+clean:
 	@$(RM) $(OBJS) $(DEPS) gtest-all.o gtest_main.o test.bin *.prof*
+	@$(RM) -r docs
 
-test : test.bin
+test: test.bin
 	@./$< --gtest_filter=\
 	-BinarySearchTreeNodeTest.abandon_removed_node\
 	:TrieNodeTest.add_child
 
-coverage : test.bin
+coverage: test.bin
 	@-./$<
 	@llvm-profdata-3.9 merge -sparse default.profraw -o default.profdata
 	@llvm-cov-3.9 show $< -instr-profile=default.profdata
@@ -48,11 +51,16 @@ coverage : test.bin
 lint:
 	@./cpplint.py --filter=-build/header_guard --headers=hpp inc/** test/**
 
+docs:
+	@doxygen
+	@$(MAKE) -C docs/latex
+
 help:
 	@echo "command:"
 	@echo "	test		run all tests"
 	@echo "	lint		run cpplint"
 	@echo "	coverage	report code coverage"
+	@echo "	docs		generate documents"
 	@echo "	clean		clean workspace"
 	@echo "	SANITIZER=	build with google sanitizers"
 	@echo "		address		fast memory error detector"
