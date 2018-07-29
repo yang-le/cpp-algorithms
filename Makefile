@@ -1,7 +1,7 @@
 OBJS = $(patsubst %.cc, %.o,$(wildcard test/*.cc))
 DEPS = $(patsubst %.cc, %.d,$(wildcard test/*.cc))
 
-CXXFLAGS = -Wall -Wno-sign-compare -O1 -std=c++11
+CXXFLAGS = -Wall -Wno-sign-compare -g -O1 -std=c++11
 
 ifeq ($(MAKECMDGOALS), coverage)
 	CXX = clang++
@@ -12,7 +12,7 @@ ifdef SANITIZER
 	ifeq ($(SANITIZER), memory)
 		CXX = clang++
 	endif
-	SANITIZER_FLAGS = -g -fsanitize=$(SANITIZER) -fno-omit-frame-pointer -fno-optimize-sibling-calls
+	SANITIZER_FLAGS = -fsanitize=$(SANITIZER) -fno-omit-frame-pointer -fno-optimize-sibling-calls
 endif
 
 .cc.o:
