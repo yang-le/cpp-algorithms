@@ -36,17 +36,19 @@ class Comparator {
       : is_default_(!compare),
         comparator_(is_default_ ? defaultCompare : compare) {}
 
-  bool equal(const T& a, const T& b) { return comparator_(a, b) == 0; }
+  bool equal(const T& a, const T& b) const { return comparator_(a, b) == 0; }
 
-  bool lessThan(const T& a, const T& b) { return comparator_(a, b) < 0; }
+  bool lessThan(const T& a, const T& b) const { return comparator_(a, b) < 0; }
 
-  bool greaterThan(const T& a, const T& b) { return comparator_(a, b) > 0; }
+  bool greaterThan(const T& a, const T& b) const {
+    return comparator_(a, b) > 0;
+  }
 
-  bool lessThanOrEqual(const T& a, const T& b) {
+  bool lessThanOrEqual(const T& a, const T& b) const {
     return lessThan(a, b) || equal(a, b);
   }
 
-  bool greaterThanOrEqual(const T& a, const T& b) {
+  bool greaterThanOrEqual(const T& a, const T& b) const {
     return greaterThan(a, b) || equal(a, b);
   }
 

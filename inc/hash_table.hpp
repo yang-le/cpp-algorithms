@@ -32,7 +32,7 @@
 template <typename T, std::size_t N = 32>
 class HashTable {
  public:
-  int hash(std::string key) {
+  int hash(std::string key) const {
     auto hash = std::accumulate(key.begin(), key.end(), 0);
 
     // Reduce hash number so it would fit hash table size.
@@ -70,7 +70,7 @@ class HashTable {
     return nullptr;
   }
 
-  T* get(std::string key) {
+  T* get(std::string key) const {
     auto& bucketLinkedList = buckets_[hash(key)];
     auto node =
         bucketLinkedList.find([&](const std::pair<std::string, T>& elem) {
@@ -80,7 +80,7 @@ class HashTable {
     return node ? &node->value_.second : nullptr;
   }
 
-  bool has(std::string key) { return get(key) != nullptr; }
+  bool has(std::string key) const { return get(key) != nullptr; }
 
   std::unordered_set<std::string> getKeys() const {
     std::unordered_set<std::string> keys;

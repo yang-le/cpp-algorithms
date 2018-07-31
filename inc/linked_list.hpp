@@ -102,7 +102,7 @@ class LinkedList {
     return deletedNode;
   }
 
-  std::shared_ptr<LinkedListNode<T>> find(const T& value) {
+  std::shared_ptr<LinkedListNode<T>> find(const T& value) const {
     if (!head_) {
       return nullptr;
     }
@@ -122,7 +122,7 @@ class LinkedList {
   }
 
   std::shared_ptr<LinkedListNode<T>> find(
-      std::function<bool(const T&)> callback) {
+      std::function<bool(const T&)> callback) const {
     if (!head_) {
       return nullptr;
     }
