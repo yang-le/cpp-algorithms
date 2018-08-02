@@ -137,10 +137,10 @@ TEST(MinHeapTest, remove_heapify_down) {
 
   EXPECT_EQ(minHeap.toString(), "3,11,10,12,11");
 
-  EXPECT_EQ(minHeap.remove(3)->toString(), "10,11,11,12");
-  EXPECT_EQ(*minHeap.remove(3)->peek(), 10);
-  EXPECT_EQ(minHeap.remove(11)->toString(), "10,12");
-  EXPECT_EQ(*minHeap.remove(3)->peek(), 10);
+  EXPECT_EQ(minHeap.remove(3).toString(), "10,11,11,12");
+  EXPECT_EQ(*minHeap.remove(3).peek(), 10);
+  EXPECT_EQ(minHeap.remove(11).toString(), "10,12");
+  EXPECT_EQ(*minHeap.remove(3).peek(), 10);
 }
 
 TEST(MinHeapTest, remove_heapify_up) {
@@ -158,15 +158,15 @@ TEST(MinHeapTest, remove_heapify_up) {
   minHeap.add(1);
 
   EXPECT_EQ(minHeap.toString(), "1,2,4,6,3,5,6,10,8,7");
-  EXPECT_EQ(minHeap.remove(8)->toString(), "1,2,4,6,3,5,6,10,7");
-  EXPECT_EQ(minHeap.remove(7)->toString(), "1,2,4,6,3,5,6,10");
-  EXPECT_EQ(minHeap.remove(1)->toString(), "2,3,4,6,10,5,6");
-  EXPECT_EQ(minHeap.remove(2)->toString(), "3,6,4,6,10,5");
-  EXPECT_EQ(minHeap.remove(6)->toString(), "3,5,4,10");
-  EXPECT_EQ(minHeap.remove(10)->toString(), "3,5,4");
-  EXPECT_EQ(minHeap.remove(5)->toString(), "3,4");
-  EXPECT_EQ(minHeap.remove(3)->toString(), "4");
-  EXPECT_EQ(minHeap.remove(4)->toString(), "");
+  EXPECT_EQ(minHeap.remove(8).toString(), "1,2,4,6,3,5,6,10,7");
+  EXPECT_EQ(minHeap.remove(7).toString(), "1,2,4,6,3,5,6,10");
+  EXPECT_EQ(minHeap.remove(1).toString(), "2,3,4,6,10,5,6");
+  EXPECT_EQ(minHeap.remove(2).toString(), "3,6,4,6,10,5");
+  EXPECT_EQ(minHeap.remove(6).toString(), "3,5,4,10");
+  EXPECT_EQ(minHeap.remove(10).toString(), "3,5,4");
+  EXPECT_EQ(minHeap.remove(5).toString(), "3,4");
+  EXPECT_EQ(minHeap.remove(3).toString(), "4");
+  EXPECT_EQ(minHeap.remove(4).toString(), "");
 }
 
 TEST(MinHeapTest, remove_with_custom_comparator) {

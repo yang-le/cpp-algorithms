@@ -34,7 +34,7 @@ class BinarySearchTree {
     root_ = std::make_shared<BinarySearchTreeNode<T>>(nodeValueCompareFunction);
   }
 
-  BinarySearchTreeNode<T>* insert(const T& value) {
+  BinarySearchTreeNode<T>& insert(const T& value) {
     return root_->insert(value);
   }
 

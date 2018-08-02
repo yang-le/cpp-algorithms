@@ -44,14 +44,14 @@ TEST(BinarySearchTreeNodeTest, insert_nodes) {
   auto bstNode = std::make_shared<BinarySearchTreeNode<int>>(2);
   auto insertedNode1 = bstNode->insert(1);
 
-  EXPECT_EQ(insertedNode1->value_, 1);
+  EXPECT_EQ(insertedNode1.value_, 1);
   EXPECT_EQ(bstNode->toString(), "1,2");
   EXPECT_TRUE(bstNode->contains(1));
   EXPECT_FALSE(bstNode->contains(3));
 
   auto insertedNode2 = bstNode->insert(3);
 
-  EXPECT_EQ(insertedNode2->value_, 3);
+  EXPECT_EQ(insertedNode2.value_, 3);
   EXPECT_EQ(bstNode->toString(), "1,2,3");
   EXPECT_TRUE(bstNode->contains(3));
   EXPECT_FALSE(bstNode->contains(4));
@@ -99,28 +99,28 @@ TEST(BinarySearchTreeNodeTest, find_min) {
   bstNode->insert(40);
   bstNode->insert(1);
 
-  EXPECT_NE(bstNode->findMin(), nullptr);
-  EXPECT_EQ(bstNode->findMin()->value_, 1);
+  // EXPECT_NE(bstNode->findMin(), nullptr);
+  EXPECT_EQ(bstNode->findMin().value_, 1);
 }
 
 TEST(BinarySearchTreeNodeTest, meta_info) {
   auto node = std::make_shared<BinarySearchTreeNode<int>>(10);
 
   node->insert(20);
-  auto node1 = node->insert(30);
+  auto &node1 = node->insert(30);
   node->insert(5);
   node->insert(40);
-  auto node2 = node->insert(1);
+  auto &node2 = node->insert(1);
 
   node->meta_.set("color", "red");
-  node1->meta_.set("color", "black");
-  node2->meta_.set("color", "white");
+  node1.meta_.set("color", "black");
+  node2.meta_.set("color", "white");
 
   EXPECT_EQ(*node->meta_.get("color"), "red");
 
-  EXPECT_NE(node->findMin(), nullptr);
-  EXPECT_EQ(node->findMin()->value_, 1);
-  EXPECT_EQ(*node->findMin()->meta_.get("color"), "white");
+  // EXPECT_NE(node->findMin(), nullptr);
+  EXPECT_EQ(node->findMin().value_, 1);
+  EXPECT_EQ(*node->findMin().meta_.get("color"), "white");
   EXPECT_EQ(*node->find(30)->meta_.get("color"), "black");
 }
 
@@ -277,7 +277,7 @@ TEST(BinarySearchTreeNodeTest, object_as_node_values) {
   EXPECT_EQ(bstNode->toString(), "obj1,obj2,obj3");
   EXPECT_TRUE(bstNode->contains(obj3));
 
-  EXPECT_EQ(bstNode->findMin()->value_, obj1);
+  EXPECT_EQ(bstNode->findMin().value_, obj1);
 }
 
 TEST(BinarySearchTreeNodeTest, abandon_removed_node) {

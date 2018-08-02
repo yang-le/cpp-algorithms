@@ -40,8 +40,8 @@ TEST(BinarySearchTreeTest, insert) {
   bst->insert(5);
 
   EXPECT_EQ(bst->toString(), "5,10,20");
-  EXPECT_EQ(insertedNode1->value_, 10);
-  EXPECT_EQ(insertedNode2->value_, 20);
+  EXPECT_EQ(insertedNode1.value_, 10);
+  EXPECT_EQ(insertedNode2.value_, 20);
 }
 
 TEST(BinarySearchTreeTest, contains) {

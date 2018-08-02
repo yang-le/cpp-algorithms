@@ -41,10 +41,10 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
         compare_(compare),
         value_comparator_(Comparator<T>(compare)) {}
 
-  BinarySearchTreeNode *insert(const T &value) {
+  BinarySearchTreeNode &insert(const T &value) {
     if (!this->valid_) {
       this->setValue(value);
-      return this;
+      return *this;
     }
 
     if (this->value_comparator_.lessThan(value, this->value_)) {
@@ -58,7 +58,7 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
       auto newNode = std::make_shared<BinarySearchTreeNode>(value, compare_);
       this->setLeft(newNode);
 
-      return newNode.get();
+      return *newNode;
     }
 
     if (this->value_comparator_.greaterThan(value, this->value_)) {
@@ -72,10 +72,10 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
       auto newNode = std::make_shared<BinarySearchTreeNode>(value, compare_);
       this->setRight(newNode);
 
-      return newNode.get();
+      return *newNode;
     }
 
-    return this;
+    return *this;
   }
 
   BinarySearchTreeNode *find(const T &value) {
@@ -99,7 +99,28 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
     return nullptr;
   }
 
-  bool contains(const T &value) { return !!find(value); }
+  const BinarySearchTreeNode *find(const T &value) const {
+    // Check the root.
+    if (this->value_comparator_.equal(this->value_, value)) {
+      return this;
+    }
+
+    auto left = this->left_;
+    if (this->value_comparator_.lessThan(value, this->value_) && left) {
+      // Check left nodes.
+      return std::static_pointer_cast<BinarySearchTreeNode>(left)->find(value);
+    }
+
+    auto right = this->right_;
+    if (this->value_comparator_.greaterThan(value, this->value_) && right) {
+      // Check right nodes.
+      return std::static_pointer_cast<BinarySearchTreeNode>(right)->find(value);
+    }
+
+    return nullptr;
+  }
+
+  bool contains(const T &value) const { return !!find(value); }
 
   bool remove(const T &value) {
     auto nodeToRemove = find(value);
@@ -128,9 +149,9 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
       auto nextBiggerNode =
           std::static_pointer_cast<BinarySearchTreeNode>(nodeToRemove->right_)
               ->findMin();
-      if (!this->node_comparator_.equal(nextBiggerNode,
+      if (!this->node_comparator_.equal(&nextBiggerNode,
                                         nodeToRemove->right_.get())) {
-        auto value = nextBiggerNode->value_;
+        auto value = nextBiggerNode.value_;
         remove(value);
         nodeToRemove->setValue(value);
       } else {
@@ -160,9 +181,18 @@ class BinarySearchTreeNode : public BinaryTreeNode<T> {
     return true;
   }
 
-  BinarySearchTreeNode *findMin() {
+  BinarySearchTreeNode &findMin() {
     if (!this->left_) {
-      return this;
+      return *this;
+    }
+
+    return std::static_pointer_cast<BinarySearchTreeNode>(this->left_)
+        ->findMin();
+  }
+
+  const BinarySearchTreeNode &findMin() const {
+    if (!this->left_) {
+      return *this;
     }
 
     return std::static_pointer_cast<BinarySearchTreeNode>(this->left_)

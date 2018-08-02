@@ -36,7 +36,7 @@ class LinkedList {
   explicit LinkedList(typename Comparator<T>::compare_func_t compare = nullptr)
       : head_(nullptr), tail_(nullptr), comparator_(compare) {}
 
-  LinkedList* prepend(const T& value) {
+  LinkedList& prepend(const T& value) {
     // Make new node to be a head.
     auto newNode = std::make_shared<LinkedListNode<T>>(value, head_);
     head_ = newNode;
@@ -46,10 +46,10 @@ class LinkedList {
       tail_ = newNode;
     }
 
-    return this;
+    return *this;
   }
 
-  LinkedList* append(const T& value) {
+  LinkedList& append(const T& value) {
     auto newNode = std::make_shared<LinkedListNode<T>>(value);
 
     // If there is no head yet let's make new node a head.
@@ -57,14 +57,14 @@ class LinkedList {
       head_ = newNode;
       tail_ = newNode;
 
-      return this;
+      return *this;
     }
 
     // Attach new node to the end of linked list.
     tail_->next_ = newNode;
     tail_ = newNode;
 
-    return this;
+    return *this;
   }
 
   std::shared_ptr<LinkedListNode<T>> remove(const T& value) {
@@ -103,27 +103,12 @@ class LinkedList {
   }
 
   std::shared_ptr<LinkedListNode<T>> find(const T& value) const {
-    if (!head_) {
-      return nullptr;
-    }
-
-    auto currentNode = head_;
-
-    while (currentNode) {
-      // If value is specified then try to compare by value..
-      if (comparator_.equal(currentNode->value_, value)) {
-        return currentNode;
-      }
-
-      currentNode = currentNode->next_;
-    }
-
-    return nullptr;
+    return find([&](const T& test) { return comparator_.equal(test, value); });
   }
 
   std::shared_ptr<LinkedListNode<T>> find(
       std::function<bool(const T&)> callback) const {
-    if (!head_) {
+    if (!head_ || !callback) {
       return nullptr;
     }
 
@@ -131,7 +116,7 @@ class LinkedList {
 
     while (currentNode) {
       // If callback is specified then try to find node by callback.
-      if (callback && callback(currentNode->value_)) {
+      if (callback(currentNode->value_)) {
         return currentNode;
       }
 
@@ -187,7 +172,7 @@ class LinkedList {
     return deletedHead;
   }
 
-  std::vector<LinkedListNode<T>> toArray() {
+  std::vector<LinkedListNode<T>> toArray() const {
     std::vector<LinkedListNode<T>> nodes;
 
     auto currentNode = head_;
@@ -199,7 +184,7 @@ class LinkedList {
     return nodes;
   }
 
-  std::string toString(std::function<std::string(const T&)> callback) {
+  std::string toString(std::function<std::string(const T&)> callback) const {
     std::vector<LinkedListNode<T>> nodes = toArray();
 
     std::string ret =
@@ -211,7 +196,7 @@ class LinkedList {
     return ret.length() ? ret.substr(1) : ret;
   }
 
-  std::string toString() {
+  std::string toString() const {
     std::vector<LinkedListNode<T>> nodes = toArray();
 
     std::string ret =

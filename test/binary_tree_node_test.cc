@@ -34,7 +34,7 @@ TEST(BinaryTreeNodeTest, create) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto rootNode = std::make_shared<BinaryTreeNode<int>>(2);
 
-  rootNode->setLeft(leftNode)->setRight(rightNode);
+  rootNode->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(rootNode->value_, 2);
   EXPECT_EQ(rootNode->left_->value_, 1);
@@ -46,7 +46,7 @@ TEST(BinaryTreeNodeTest, set_parent) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto rootNode = std::make_shared<BinaryTreeNode<int>>(2);
 
-  rootNode->setLeft(leftNode)->setRight(rightNode);
+  rootNode->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(rootNode->parent_.lock(), nullptr);
   EXPECT_EQ(rootNode->left_->parent_.lock()->value_, 2);
@@ -59,7 +59,7 @@ TEST(BinaryTreeNodeTest, traverse) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto rootNode = std::make_shared<BinaryTreeNode<int>>(2);
 
-  rootNode->setLeft(leftNode)->setRight(rightNode);
+  rootNode->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(rootNode->traverseInOrder(), std::vector<int>({1, 2, 3}));
   EXPECT_EQ(rootNode->toString(), "1,2,3");
@@ -70,7 +70,7 @@ TEST(BinaryTreeNodeTest, remove_child) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto rootNode = std::make_shared<BinaryTreeNode<int>>(2);
 
-  rootNode->setLeft(leftNode)->setRight(rightNode);
+  rootNode->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(rootNode->traverseInOrder(), std::vector<int>({1, 2, 3}));
 
@@ -89,7 +89,7 @@ TEST(BinaryTreeNodeTest, replace_child) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto rootNode = std::make_shared<BinaryTreeNode<int>>(2);
 
-  rootNode->setLeft(leftNode)->setRight(rightNode);
+  rootNode->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(rootNode->traverseInOrder(), std::vector<int>({1, 2, 3}));
 
@@ -130,13 +130,13 @@ TEST(BinaryTreeNodeTest, height) {
   EXPECT_EQ(root->height(), 0);
   EXPECT_EQ(root->balanceFactor(), 0);
 
-  root->setLeft(left)->setRight(right);
+  root->setLeft(left).setRight(right);
 
   EXPECT_EQ(root->height(), 1);
   EXPECT_EQ(left->height(), 0);
   EXPECT_EQ(root->balanceFactor(), 0);
 
-  left->setLeft(grandLeft)->setRight(grandRight);
+  left->setLeft(grandLeft).setRight(grandRight);
 
   EXPECT_EQ(root->height(), 2);
   EXPECT_EQ(left->height(), 1);
@@ -170,7 +170,7 @@ TEST(BinaryTreeNodeTest, null_node) {
   auto rightNode = std::make_shared<BinaryTreeNode<int>>(3);
   auto root = std::make_shared<BinaryTreeNode<int>>(2);
 
-  root->setLeft(leftNode)->setRight(rightNode);
+  root->setLeft(leftNode).setRight(rightNode);
 
   EXPECT_EQ(root->left_->value_, 1);
   EXPECT_EQ(root->right_->value_, 3);
@@ -300,7 +300,7 @@ TEST(BinaryTreeNodeTest, copy_node) {
   auto left = std::make_shared<BinaryTreeNode<std::string>>("left");
   auto right = std::make_shared<BinaryTreeNode<std::string>>("right");
 
-  root->setLeft(left)->setRight(right);
+  root->setLeft(left).setRight(right);
 
   EXPECT_EQ(root->toString(), "left,root,right");
 
@@ -308,7 +308,7 @@ TEST(BinaryTreeNodeTest, copy_node) {
   auto newLeft = std::make_shared<BinaryTreeNode<std::string>>("new_left");
   auto newRight = std::make_shared<BinaryTreeNode<std::string>>("new_right");
 
-  newRoot->setLeft(newLeft)->setRight(newRight);
+  newRoot->setLeft(newLeft).setRight(newRight);
 
   EXPECT_EQ(newRoot->toString(), "new_left,new_root,new_right");
 

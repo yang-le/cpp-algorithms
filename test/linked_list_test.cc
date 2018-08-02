@@ -164,7 +164,7 @@ TEST(LinkedListTest, to_string) {
   auto nodeValue1 = std::make_pair(1, "key1");
   auto nodeValue2 = std::make_pair(2, "key2");
 
-  list.append(nodeValue1)->prepend(nodeValue2);
+  list.append(nodeValue1).prepend(nodeValue2);
 
   std::string result =
       list.toString([](const std::pair<int, std::string>& pair) {
@@ -182,7 +182,7 @@ TEST(LinkedListTest, find_by_value) {
   list.append(1);
   EXPECT_NE(list.find(1), nullptr);
 
-  list.append(2)->append(3);
+  list.append(2).append(3);
 
   auto node = list.find(2);
 
@@ -194,8 +194,8 @@ TEST(LinkedListTest, find_by_callback) {
   LinkedList<std::pair<int, std::string>> list;
 
   list.append(std::make_pair(1, "test1"))
-      ->append(std::make_pair(2, "test2"))
-      ->append(std::make_pair(3, "test3"));
+      .append(std::make_pair(2, "test2"))
+      .append(std::make_pair(3, "test3"));
 
   auto node = list.find([](const std::pair<int, std::string>& pair) {
     return pair.second == "test2";
@@ -222,8 +222,8 @@ TEST(LinkedListTest, find_by_custom_compare) {
       });
 
   list.append(std::make_pair(1, "test1"))
-      ->append(std::make_pair(2, "test2"))
-      ->append(std::make_pair(3, "test3"));
+      .append(std::make_pair(2, "test2"))
+      .append(std::make_pair(3, "test3"));
 
   auto node = list.find(std::make_pair(2, std::string("test2")));
 

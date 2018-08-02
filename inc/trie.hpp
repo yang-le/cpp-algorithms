@@ -42,7 +42,7 @@ class Trie {
   }
 
   std::unordered_set<std::string> suggestNextCharacters(
-      const std::string& word) {
+      const std::string& word) const {
     auto lastCharacter = getLastCharacterNode(word);
 
     if (!lastCharacter) {
@@ -52,14 +52,14 @@ class Trie {
     return lastCharacter->suggestChildren();
   }
 
-  bool doesWordExist(const std::string& word) {
+  bool doesWordExist(const std::string& word) const {
     return !!getLastCharacterNode(word);
   }
 
  private:
-  TrieNode* getLastCharacterNode(const std::string& word) {
+  const TrieNode* getLastCharacterNode(const std::string& word) const {
     auto characters = word.c_str();
-    TrieNode* currentNode = &head_;
+    const TrieNode* currentNode = &head_;
     for (int charIndex = 0; charIndex < word.length(); ++charIndex) {
       if (!currentNode->hasChild(characters[charIndex])) {
         return nullptr;

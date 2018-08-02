@@ -28,9 +28,9 @@ TEST(RedBlackTreeTest, color_first_node_black) {
 
   auto firstInsertedNode = tree->insert(10);
 
-  EXPECT_TRUE(tree->isNodeColored(*firstInsertedNode));
-  EXPECT_TRUE(tree->isNodeBlack(*firstInsertedNode));
-  EXPECT_FALSE(tree->isNodeRed(*firstInsertedNode));
+  EXPECT_TRUE(tree->isNodeColored(firstInsertedNode));
+  EXPECT_TRUE(tree->isNodeBlack(firstInsertedNode));
+  EXPECT_FALSE(tree->isNodeRed(firstInsertedNode));
 
   EXPECT_EQ(tree->toString(), "10");
   EXPECT_EQ(tree->root_->height(), 0);

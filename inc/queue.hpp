@@ -28,9 +28,9 @@
 template <typename T>
 class Queue {
  public:
-  bool isEmpty() { return !linked_list_.tail_; }
+  bool isEmpty() const { return !linked_list_.tail_; }
 
-  const T* peek() {
+  const T* peek() const {
     if (!linked_list_.head_) {
       return nullptr;
     }
@@ -45,11 +45,11 @@ class Queue {
     return removedHead ? removedHead->value_ : T();
   }
 
-  std::string toString(std::function<std::string(const T&)> callback) {
+  std::string toString(std::function<std::string(const T&)> callback) const {
     return linked_list_.toString(callback);
   }
 
-  std::string toString() { return linked_list_.toString(); }
+  std::string toString() const { return linked_list_.toString(); }
 
  private:
   LinkedList<T> linked_list_;

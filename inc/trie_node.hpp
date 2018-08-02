@@ -31,7 +31,9 @@ class TrieNode {
   explicit TrieNode(char character, bool is_complete_word = false)
       : character_(character), is_complete_word_(is_complete_word) {}
 
-  TrieNode* getChild(char character) { return children_.get({character}); }
+  TrieNode* getChild(char character) const {
+    return children_.get({character});
+  }
 
   TrieNode* addChild(char character, bool is_complete_word = false) {
     if (!children_.has({character})) {
@@ -41,7 +43,7 @@ class TrieNode {
     return children_.get({character});
   }
 
-  bool hasChild(char character) { return children_.has({character}); }
+  bool hasChild(char character) const { return children_.has({character}); }
 
   std::unordered_set<std::string> suggestChildren() const {
     return children_.getKeys();

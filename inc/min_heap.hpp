@@ -37,7 +37,7 @@ class MinHeap {
   explicit MinHeap(typename Comparator<T>::compare_func_t compare = nullptr)
       : comparator_(compare) {}
 
-  const T *peek() {
+  const T *peek() const {
     if (container_.size() == 0) {
       return nullptr;
     }
@@ -66,13 +66,13 @@ class MinHeap {
     return &root_;
   }
 
-  MinHeap *add(const T &item) {
+  MinHeap &add(const T &item) {
     container_.push_back(item);
     heapifyUp();
-    return this;
+    return *this;
   }
 
-  MinHeap *remove(const T &item, Comparator<T> comparator = Comparator<T>()) {
+  MinHeap &remove(const T &item, Comparator<T> comparator = Comparator<T>()) {
     // Find number of items to remove.
     auto customComparator = comparator ? comparator : comparator_;
     auto numberOfItemsToRemove = find(item, customComparator).size();
@@ -104,11 +104,11 @@ class MinHeap {
       }
     }
 
-    return this;
+    return *this;
   }
 
-  std::vector<int> find(const T &item,
-                        Comparator<T> custom_comparator = Comparator<T>()) {
+  std::vector<int> find(
+      const T &item, Comparator<T> custom_comparator = Comparator<T>()) const {
     std::vector<int> foundItemIndices;
     auto comparator = custom_comparator ? custom_comparator : comparator_;
 
@@ -121,9 +121,9 @@ class MinHeap {
     return foundItemIndices;
   }
 
-  bool isEmpty() { return container_.empty(); }
+  bool isEmpty() const { return container_.empty(); }
 
-  std::string toString() {
+  std::string toString() const {
     std::string ret =
         std::accumulate(container_.begin(), container_.end(), std::string(),
                         [](const std::string &a, const T &b) {
@@ -136,33 +136,39 @@ class MinHeap {
   }
 
  private:
-  int getLeftChildIndex(int parentIndex) { return (2 * parentIndex) + 1; }
+  static int getLeftChildIndex(int parentIndex) {
+    return (2 * parentIndex) + 1;
+  }
 
-  int getRightChildIndex(int parentIndex) { return (2 * parentIndex) + 2; }
+  static int getRightChildIndex(int parentIndex) {
+    return (2 * parentIndex) + 2;
+  }
 
-  int getParentIndex(int childIndex) {
+  static int getParentIndex(int childIndex) {
     return static_cast<int>(std::floor((childIndex - 1) / 2.0));
   }
 
-  bool hasParent(int childIndex) { return getParentIndex(childIndex) >= 0; }
+  static bool hasParent(int childIndex) {
+    return getParentIndex(childIndex) >= 0;
+  }
 
-  bool hasLeftChild(int parentIndex) {
+  bool hasLeftChild(int parentIndex) const {
     return getLeftChildIndex(parentIndex) < container_.size();
   }
 
-  bool hasRightChild(int parentIndex) {
+  bool hasRightChild(int parentIndex) const {
     return getRightChildIndex(parentIndex) < container_.size();
   }
 
-  const T &leftChild(int parentIndex) {
+  const T &leftChild(int parentIndex) const {
     return container_[getLeftChildIndex(parentIndex)];
   }
 
-  const T &rightChild(int parentIndex) {
+  const T &rightChild(int parentIndex) const {
     return container_[getRightChildIndex(parentIndex)];
   }
 
-  const T &parent(int childIndex) {
+  const T &parent(int childIndex) const {
     return container_[getParentIndex(childIndex)];
   }
 

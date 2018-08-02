@@ -30,9 +30,9 @@
 template <typename T>
 class Stack {
  public:
-  bool isEmpty() { return !linked_list_.tail_; }
+  bool isEmpty() const { return !linked_list_.tail_; }
 
-  const T* peek() {
+  const T* peek() const {
     if (isEmpty()) {
       return nullptr;
     }
@@ -47,7 +47,7 @@ class Stack {
     return removedTail ? removedTail->value_ : T();
   }
 
-  std::vector<T> toArray() {
+  std::vector<T> toArray() const {
     std::vector<LinkedListNode<T>> nodes = linked_list_.toArray();
     std::vector<T> result(nodes.size());
 
@@ -59,11 +59,11 @@ class Stack {
     return result;
   }
 
-  std::string toString(std::function<std::string(const T&)> callback) {
+  std::string toString(std::function<std::string(const T&)> callback) const {
     return linked_list_.toString(callback);
   }
 
-  std::string toString() { return linked_list_.toString(); }
+  std::string toString() const { return linked_list_.toString(); }
 
  private:
   LinkedList<T> linked_list_;

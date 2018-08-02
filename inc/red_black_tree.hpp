@@ -34,10 +34,10 @@ class RedBlackTree : public BinarySearchTree<T> {
   const std::string COLOR = "color";
 
  public:
-  BinaryTreeNode<T>* insert(const T& value) {
-    auto result = BinarySearchTree<T>::insert(value);
+  BinaryTreeNode<T>& insert(const T& value) {
+    auto& result = BinarySearchTree<T>::insert(value);
 
-    auto insertNode = result->shared_from_this();
+    auto insertNode = result.shared_from_this();
 
     if (insertNode == this->root_) {
       makeNodeBlack(insertNode);

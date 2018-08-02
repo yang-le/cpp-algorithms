@@ -28,11 +28,11 @@
 template <typename T>
 class AvlTree : public BinarySearchTree<T> {
  public:
-  BinarySearchTreeNode<T>* insert(const T& value) {
-    auto result = BinarySearchTree<T>::insert(value);
+  BinarySearchTreeNode<T>& insert(const T& value) {
+    auto& result = BinarySearchTree<T>::insert(value);
 
     auto currentNode = std::static_pointer_cast<BinarySearchTreeNode<T>>(
-        result->shared_from_this());
+        result.shared_from_this());
 
     while (currentNode) {
       balance(currentNode);

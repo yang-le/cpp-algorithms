@@ -46,21 +46,21 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
         valid_(true),
         node_comparator_(Comparator<const BinaryTreeNode *>()) {}
 
-  int leftHeight() {
+  int leftHeight() const {
     auto left = left_;
     return left ? left->height() + 1 : 0;
   }
 
-  int rightHeight() {
+  int rightHeight() const {
     auto right = right_;
     return right ? right->height() + 1 : 0;
   }
 
-  int height() { return std::max(leftHeight(), rightHeight()); }
+  int height() const { return std::max(leftHeight(), rightHeight()); }
 
-  int balanceFactor() { return leftHeight() - rightHeight(); }
+  int balanceFactor() const { return leftHeight() - rightHeight(); }
 
-  std::shared_ptr<BinaryTreeNode> uncle() {
+  std::shared_ptr<BinaryTreeNode> uncle() const {
     // Check if current node has parent.
     auto parent = parent_.lock();
     if (!parent) {
@@ -89,14 +89,14 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
     return grad_parent->left_;
   }
 
-  BinaryTreeNode *setValue(const T &value) {
+  BinaryTreeNode &setValue(const T &value) {
     value_ = value;
     valid_ = true;
 
-    return this;
+    return *this;
   }
 
-  BinaryTreeNode *setLeft(std::shared_ptr<BinaryTreeNode> node) {
+  BinaryTreeNode &setLeft(std::shared_ptr<BinaryTreeNode> node) {
     // Reset parent for left node since it is going to be detached.
     if (left_) {
       left_->parent_.reset();
@@ -110,10 +110,10 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
       left_->parent_ = this->shared_from_this();
     }
 
-    return this;
+    return *this;
   }
 
-  BinaryTreeNode *setRight(std::shared_ptr<BinaryTreeNode> node) {
+  BinaryTreeNode &setRight(std::shared_ptr<BinaryTreeNode> node) {
     // Reset parent for right node since it is going to be detached.
     if (right_) {
       right_->parent_.reset();
@@ -127,7 +127,7 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
       right_->parent_ = this->shared_from_this();
     }
 
-    return this;
+    return *this;
   }
 
   bool removeChild(BinaryTreeNode *nodeToRemove) {
@@ -170,7 +170,7 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
     targetNode->setRight(sourceNode.right_);
   }
 
-  std::vector<T> traverseInOrder() {
+  std::vector<T> traverseInOrder() const {
     std::vector<T> traverse;
 
     // Add left node.
@@ -195,7 +195,7 @@ class BinaryTreeNode : public std::enable_shared_from_this<BinaryTreeNode<T>> {
     return traverse;
   }
 
-  std::string toString() {
+  std::string toString() const {
     std::vector<T> nodes = traverseInOrder();
     std::string ret = std::accumulate(nodes.begin(), nodes.end(), std::string(),
                                       [](const std::string &a, const T &b) {
