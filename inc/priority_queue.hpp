@@ -65,10 +65,10 @@ class PriorityQueue : public MinHeap<T> {
   bool hasValue(const T &item) const { return findByValue(item).size() > 0; }
 
  private:
-  int comparePriority(const T &a, const T &b) {
-    if (priorities_[a] == priorities_[b]) return 0;
+  int comparePriority(const T &a, const T &b) const {
+    if (priorities_.at(a) == priorities_.at(b)) return 0;
 
-    return priorities_[a] < priorities_[b] ? -1 : 1;
+    return priorities_.at(a) < priorities_.at(b) ? -1 : 1;
   }
 
   int compareValue(const T &a, const T &b) const {

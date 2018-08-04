@@ -52,15 +52,15 @@ class RedBlackTree : public BinarySearchTree<T> {
 
   bool remove(const T& value) { throw MethodNotImplementedException(); }
 
-  bool isNodeRed(const BinaryTreeNode<T>& node) {
+  bool isNodeRed(const BinaryTreeNode<T>& node) const {
     return *node.meta_.get(COLOR) == RED;
   }
 
-  bool isNodeBlack(const BinaryTreeNode<T>& node) {
+  bool isNodeBlack(const BinaryTreeNode<T>& node) const {
     return BLACK == *node.meta_.get(COLOR);
   }
 
-  bool isNodeColored(const BinaryTreeNode<T>& node) {
+  bool isNodeColored(const BinaryTreeNode<T>& node) const {
     return isNodeRed(node) || isNodeBlack(node);
   }
 

@@ -38,11 +38,11 @@ class BinarySearchTree {
     return root_->insert(value);
   }
 
-  bool contains(const T& value) { return root_->contains(value); }
+  bool contains(const T& value) const { return root_->contains(value); }
 
   bool remove(const T& value) { return root_->remove(value); }
 
-  std::string toString() { return root_->toString(); }
+  std::string toString() const { return root_->toString(); }
 
  public:
   std::shared_ptr<BinarySearchTreeNode<T>> root_;
