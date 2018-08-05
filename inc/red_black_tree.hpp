@@ -57,7 +57,7 @@ class RedBlackTree : public BinarySearchTree<T> {
   }
 
   bool isNodeBlack(const BinaryTreeNode<T>& node) const {
-    return BLACK == *node.meta_.get(COLOR);
+    return *node.meta_.get(COLOR) == BLACK;
   }
 
   bool isNodeColored(const BinaryTreeNode<T>& node) const {
@@ -293,11 +293,11 @@ class RedBlackTree : public BinarySearchTree<T> {
 
   void swapNodeColors(std::shared_ptr<BinaryTreeNode<T>> firstNode,
                       std::shared_ptr<BinaryTreeNode<T>> secondNode) {
-    auto firstColor = firstNode->meta_.get(COLOR);
-    auto secondColor = secondNode->meta_.get(COLOR);
+    auto firstColor = *firstNode->meta_.get(COLOR);
+    auto secondColor = *secondNode->meta_.get(COLOR);
 
-    firstNode->meta_.set(COLOR, *secondColor);
-    secondNode->meta_.set(COLOR, *firstColor);
+    firstNode->meta_.set(COLOR, secondColor);
+    secondNode->meta_.set(COLOR, firstColor);
   }
 
  public:

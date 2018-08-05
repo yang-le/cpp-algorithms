@@ -1,7 +1,7 @@
 OBJS = $(patsubst %.cc, %.o,$(wildcard test/*.cc))
 DEPS = $(patsubst %.cc, %.d,$(wildcard test/*.cc))
 
-CXXFLAGS = -Wall -Wno-sign-compare -g -O1 -std=c++11
+CXXFLAGS = -Wall -Wno-sign-compare -g -O0 -std=c++11
 
 ifeq ($(MAKECMDGOALS), coverage)
 	CXX = clang++
