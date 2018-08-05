@@ -171,3 +171,172 @@ TEST(RedBlackTreeTest, balance_when_uncle_is_black) {
   EXPECT_TRUE(tree.isNodeBlack(node9));
   EXPECT_TRUE(tree.isNodeBlack(node3));
 }
+
+TEST(RedBlackTreeTest, left_left_rotation) {
+  auto tree = RedBlackTree<int>();
+
+  auto& node1 = tree.insert(10);
+  auto& node2 = tree.insert(-10);
+  auto& node3 = tree.insert(20);
+  auto& node4 = tree.insert(7);
+  auto& node5 = tree.insert(15);
+
+  EXPECT_EQ(tree.toString(), "-10,7,10,15,20");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node3));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node5));
+
+  auto& node6 = tree.insert(13);
+
+  EXPECT_EQ(tree.toString(), "-10,7,10,13,15,20");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node5));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node6));
+  EXPECT_TRUE(tree.isNodeRed(node3));
+}
+
+TEST(RedBlackTreeTest, left_right_rotation) {
+  auto tree = RedBlackTree<int>();
+
+  auto& node1 = tree.insert(10);
+  auto& node2 = tree.insert(-10);
+  auto& node3 = tree.insert(20);
+  auto& node4 = tree.insert(7);
+  auto& node5 = tree.insert(15);
+
+  EXPECT_EQ(tree.toString(), "-10,7,10,15,20");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node3));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node5));
+
+  auto& node6 = tree.insert(17);
+
+  EXPECT_EQ(tree.toString(), "-10,7,10,15,17,20");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node6));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node5));
+  EXPECT_TRUE(tree.isNodeRed(node3));
+}
+
+TEST(RedBlackTreeTest, recoloring) {
+  auto tree = RedBlackTree<int>();
+
+  auto& node1 = tree.insert(10);
+  auto& node2 = tree.insert(-10);
+  auto& node3 = tree.insert(20);
+  auto& node4 = tree.insert(-20);
+  auto& node5 = tree.insert(6);
+  auto& node6 = tree.insert(15);
+  auto& node7 = tree.insert(30);
+  auto& node8 = tree.insert(1);
+  auto& node9 = tree.insert(9);
+
+  EXPECT_EQ(tree.toString(), "-20,-10,1,6,9,10,15,20,30");
+  EXPECT_EQ(tree.root_->height(), 3);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeRed(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node3));
+  EXPECT_TRUE(tree.isNodeBlack(node4));
+  EXPECT_TRUE(tree.isNodeBlack(node5));
+  EXPECT_TRUE(tree.isNodeRed(node6));
+  EXPECT_TRUE(tree.isNodeRed(node7));
+  EXPECT_TRUE(tree.isNodeRed(node8));
+  EXPECT_TRUE(tree.isNodeRed(node9));
+
+  tree.insert(4);
+
+  EXPECT_EQ(tree.toString(), "-20,-10,1,4,6,9,10,15,20,30");
+  EXPECT_EQ(tree.root_->height(), 3);
+}
+
+TEST(RedBlackTreeTest, right_left_rotation) {
+  auto tree = RedBlackTree<int>();
+
+  auto& node1 = tree.insert(10);
+  auto& node2 = tree.insert(-10);
+  auto& node3 = tree.insert(20);
+  auto& node4 = tree.insert(-20);
+  auto& node5 = tree.insert(6);
+  auto& node6 = tree.insert(30);
+
+  EXPECT_EQ(tree.toString(), "-20,-10,6,10,20,30");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node3));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node5));
+  EXPECT_TRUE(tree.isNodeRed(node6));
+
+  auto& node7 = tree.insert(25);
+
+  auto rightNode = tree.root_->right_;
+  auto rightLeftNode = rightNode->left_;
+  auto rightRightNode = rightNode->right_;
+
+  EXPECT_EQ(rightNode->value_, node7.value_);
+  EXPECT_EQ(rightLeftNode->value_, node3.value_);
+  EXPECT_EQ(rightRightNode->value_, node6.value_);
+
+  EXPECT_EQ(tree.toString(), "-20,-10,6,10,20,25,30");
+  EXPECT_EQ(tree.root_->height(), 2);
+
+  EXPECT_TRUE(tree.isNodeBlack(node1));
+  EXPECT_TRUE(tree.isNodeBlack(node2));
+  EXPECT_TRUE(tree.isNodeBlack(node7));
+  EXPECT_TRUE(tree.isNodeRed(node4));
+  EXPECT_TRUE(tree.isNodeRed(node5));
+  EXPECT_TRUE(tree.isNodeRed(node3));
+  EXPECT_TRUE(tree.isNodeRed(node6));
+}
+
+TEST(RedBlackTreeTest, left_left_rotation_with_left_grandparent) {
+  auto tree = RedBlackTree<int>();
+
+  tree.insert(20);
+  tree.insert(15);
+  tree.insert(25);
+  tree.insert(10);
+  tree.insert(5);
+
+  EXPECT_EQ(tree.toString(), "5,10,15,20,25");
+  EXPECT_EQ(tree.root_->height(), 2);
+}
+
+TEST(RedBlackTreeTest, right_right_rotation_with_left_grandparent) {
+  auto tree = RedBlackTree<int>();
+
+  tree.insert(20);
+  tree.insert(15);
+  tree.insert(25);
+  tree.insert(17);
+  tree.insert(19);
+
+  EXPECT_EQ(tree.toString(), "15,17,19,20,25");
+  EXPECT_EQ(tree.root_->height(), 2);
+}
+
+TEST(RedBlackTreeTest, remove) {
+  auto tree = RedBlackTree<int>();
+
+  EXPECT_THROW(tree.remove(1),
+               RedBlackTree<int>::MethodNotImplementedException);
+}
